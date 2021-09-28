@@ -2,7 +2,7 @@
 
 var moongose = require('mongoose');
 var app = require('./app');
-var port = 3802;
+var port = 3800;
 
 moongose.Promise = global.Promise;
 
