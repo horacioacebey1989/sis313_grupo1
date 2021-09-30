@@ -1,7 +1,8 @@
 'use strict'
 
 var usuario = require('../model/usuario');
-var jwt = require('../services/jwt')
+var jwt = require('../services/jwt');
+var bcrypt = require('bcrypt-nodejs');
 
 function addUsuario(req, res){
     console.log(req.body);
@@ -16,9 +17,17 @@ function addUsuario(req, res){
         usuarioNew.save((err, usuarioGet) =>{
             if(err) return res.status(500).send({message:'Error al guardar los datos!'});
             if(usuarioGet){
-                res.status(200).send({
-                    usuario : usuarioGet
-                })
+                bcrypt.hash(params.password,null,null,(err,hash)=>{
+                    if(err) {
+                        return res.status(500).send({message:'Error al guardar los datos'});
+                    }
+                    if(hash) {
+                        usuarioNew.password = hash;
+                        res.status(200).send({
+                            usuario: usuarioGet
+                        });
+                    }
+                });
             }
         });
     }
