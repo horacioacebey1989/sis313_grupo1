@@ -6,7 +6,7 @@ var port = 3800;
 
 moongose.Promise = global.Promise;
 
-moongose.connect('mongodb://localhost:27017/database_prueba')
+moongose.connect('mongodb://localhost:27017/class_finder_database')
     .then(()=>{
         console.log('Se ha conectado a la base datos existosamente!');
         app.listen(port, ()=>{

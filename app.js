@@ -7,9 +7,6 @@ var app = express();
 
 
 //CARGAR RUTAS
-
-var tipoUsuario_route = require('./routes/tipoUsuario');
-
 var usuario_route = require('./routes/usuario');
 
 
@@ -33,7 +30,6 @@ app.get('/', (req, res) =>{
     })
 });
 
-app.use('/api', tipoUsuario_route);
 app.use('/api', usuario_route);
 
 
