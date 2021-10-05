@@ -42,8 +42,8 @@ function addUsuario(req, res){
 // LOGIN
 function loginUsuario(req, res){
     var params = req.body;
-    
-    usuario.findOne({nombre: params.nombre}, (err, usuarioCheck)=>{
+
+    usuario.findOne({nombre: params.nombre, visible: True}, (err, usuarioCheck)=>{
             if(err) return res.status(500).send({message:'Error en la peticion'});
             if(usuarioCheck){
                 return res.status(200).send({
@@ -61,7 +61,7 @@ function loginUsuario(req, res){
 function getUsuario(req, res) {
     var params = req.body;
     var idUsuario = params.id;
-    usuario.findById(idUsuario, (err, UsuarioGet) => {
+    usuario.findById({_id: idUsuario, visible: True}, (err, UsuarioGet) => {
         if(err) {
             return res.status(500).send({ message: 'Error en la peticion' });
         }
@@ -75,42 +75,42 @@ function getUsuario(req, res) {
 
 function getUsuario2(req, res) {
     var idUsuario = req.params.id;
-    tipoUsuario.findById(idTipoUsuario, (err, tipoUsuarioGet) => {
+    usuario.findById({_id: idUsuario, visible:True}, (err, UsuarioGet) => {
         if(err) {
             return res.status(500).send({ message: 'Error en la peticion' });
         }
-        if(tipoUsuarioGet) {
+        if(UsuarioGet) {
             res.status(200).send({
-                tipoUsuario : tipoUsuarioGet
+                Usuario : UsuarioGet
             });
         }
     });
 }
 
 /* GET MANY */
-function getTiposUsuario(req, res) {
-    tipoUsuario.find((err, tiposUsuarioGet) => {
+function getUsuarios(req, res) {
+    usuario.find({ visible: True }, (err, UsuarioGet) => {
         if(err) {
             return res.status(500).send({ message: 'Error en la peticion' });
         }
-        if(tiposUsuarioGet) {
+        if(UsuarioGet) {
             res.status(200).send({
-                tiposUsuario : tiposUsuarioGet
+                Usuario : UsuarioGet
             });
         }
     });
 }
 
-function updateTipoUsuario(req, res) {
-    var idTipoUsuario = req.params.id;
+function updateUsuario(req, res) {
+    var idUsuario = req.params.id;
     var update = req.body;
-    tipoUsuario.findByIdAndUpdate(idTipoUsuario, update, { new: true }, (err, tipoUsuarioUpdate) => {
+    usuario.findByIdAndUpdate({_id: idUsuario, visible: True}, update, { new: true }, (err, UsuarioUpdate) => {
         if(err) {
             return res.status(500).send({ message: 'Error en la peticion' });
         }
-        if(tipoUsuarioUpdate) {
+        if(UsuarioUpdate) {
             res.status(200).send({
-                tipoUsuario: tipoUsuarioUpdate
+                Usuario: UsuarioUpdate
             });
         }
         else {
@@ -120,7 +120,42 @@ function updateTipoUsuario(req, res) {
 
 }
 
+function deleteUsuario(req, res) {
+    var idUsuario = req.params.id;
+    var update;
+
+    usuario.findById({_id: idUsuario, visible: True}, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
+            update = UsuarioGet;
+        }
+    });
+
+    update.visible = False;
+
+    usuario.findByIdAndUpdate(idUsuario, update, { new: true }, (err, UsuarioUpdate) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioUpdate) {
+            res.status(200).send({
+                Usuario: UsuarioUpdate
+            });
+        }
+        else {
+            return res.status(404).send({ message: 'No se pudo actualizar' });
+        }
+    }); 
+}
+
 module.exports = {
     addUsuario,
-    loginUsuario
+    loginUsuario,
+    getUsuario,
+    getUsuario2,
+    getUsuarios,
+    updateUsuario,
+    deleteUsuario
 }
