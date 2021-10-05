@@ -40,7 +40,6 @@ function addUsuario(req, res){
 }
 
 // LOGIN
-
 function loginUsuario(req, res){
     var params = req.body;
     
@@ -59,8 +58,67 @@ function loginUsuario(req, res){
 
 }
 
+function getUsuario(req, res) {
+    var params = req.body;
+    var idUsuario = params.id;
+    usuario.findById(idUsuario, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
+            res.status(200).send({
+                Usuario : UsuarioGet
+            });
+        }
+    });
+}
 
-// UPDATE
+function getUsuario2(req, res) {
+    var idUsuario = req.params.id;
+    tipoUsuario.findById(idTipoUsuario, (err, tipoUsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(tipoUsuarioGet) {
+            res.status(200).send({
+                tipoUsuario : tipoUsuarioGet
+            });
+        }
+    });
+}
+
+/* GET MANY */
+function getTiposUsuario(req, res) {
+    tipoUsuario.find((err, tiposUsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(tiposUsuarioGet) {
+            res.status(200).send({
+                tiposUsuario : tiposUsuarioGet
+            });
+        }
+    });
+}
+
+function updateTipoUsuario(req, res) {
+    var idTipoUsuario = req.params.id;
+    var update = req.body;
+    tipoUsuario.findByIdAndUpdate(idTipoUsuario, update, { new: true }, (err, tipoUsuarioUpdate) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(tipoUsuarioUpdate) {
+            res.status(200).send({
+                tipoUsuario: tipoUsuarioUpdate
+            });
+        }
+        else {
+            return res.status(404).send({ message: 'No se pudo actualizar' });
+        }
+    });
+
+}
 
 module.exports = {
     addUsuario,
