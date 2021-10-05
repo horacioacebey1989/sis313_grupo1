@@ -6,9 +6,11 @@ var Schema = mongoose.Schema;
 
 var UsuarioSchema = Schema({
         nombre : String,
-        password: String,
-        estado : Boolean,
-        tipoUsuario : {type : Schema.ObjectId, ref : 'Tipo_usuario'} 
+        fecha_nacimiento : Date,
+        contacto : String,
+        username : String,
+        password : String,
+        visible : Boolean
 });
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model('Usuarios', UsuarioSchema);
