@@ -11,6 +11,7 @@ var estudiante_route = require('./routes/estudiante');
 var profesor_route = require('./routes/profesor');
 
 
+
 // MIDDLEWARES
  app.use(bodyParser.urlencoded({extended:true}));
  app.use(bodyParser.json());

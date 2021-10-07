@@ -8,9 +8,6 @@ function addUsuario(req, res){
     console.log(req.body);
     var params = req.body;
     var usuarioNew = new usuario();
-    
-
-
     if(params.nombre, params.password, params.contacto, params.username){
         usuarioNew.nombre = params.nombre;
         usuarioNew.fecha_nacimiento = params.fecha_nacimiento;
@@ -18,7 +15,6 @@ function addUsuario(req, res){
         usuarioNew.username = params.username;
         usuarioNew.password = params.password;
         usuarioNew.visible = true;
-      
         usuarioNew.save((err, usuarioGet) =>{
             if(err) return res.status(500).send({message:'Error al guardar los datos!'});
             if(usuarioGet){
@@ -42,11 +38,9 @@ function addUsuario(req, res){
 }
 
 // LOGIN
-
 function loginUsuario(req, res){
     var params = req.body;
-    
-    usuario.findOne({usuario: params.nombre}, (err, usuarioCheck)=>{
+    usuario.findOne({nombre: params.nombre, visible: True}, (err, usuarioCheck)=>{
             if(err) return res.status(500).send({message:'Error en la peticion'});
             if(usuarioCheck){
                 return res.status(200).send({
@@ -61,28 +55,105 @@ function loginUsuario(req, res){
 
 }
 
-
-//GET USUARIO
-function getUsuario(req, res){
+function getUsuario(req, res) {
     var params = req.body;
-    var verify = params.username;
-    usuario.findOne({username : verify}, (err, usuarioGet) => {
-        if(err) return res.status(500).send({message : 'Error en la peticion'});
-        if(usuarioGet){
+    var idUsuario = params.id;
+    usuario.findById({_id: idUsuario, visible: True}, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
             res.status(200).send({
-                //tipoUsuario : tipoUsuarioGet
-                username : usuarioGet
-            })
-        }else{
-            return res.status(404).send({message : 'No se encontraron coincidencias'})
+                Usuario : UsuarioGet
+            });
         }
     });
 }
 
-// UPDATE
+function getUsuario2(req, res) {
+    var idUsuario = req.params.id;
+    usuario.findById({_id: idUsuario, visible:True}, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
+            res.status(200).send({
+                Usuario : UsuarioGet
+            });
+        }
+    });
+}
+
+/* GET MANY */
+function getUsuarios(req, res) {
+    usuario.find({ visible: True }, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
+            res.status(200).send({
+                Usuario : UsuarioGet
+            });
+        }
+    });
+}
+
+function updateUsuario(req, res) {
+    var idUsuario = req.params.id;
+    var update = req.body;
+    usuario.findByIdAndUpdate({_id: idUsuario, visible: True}, update, { new: true }, (err, UsuarioUpdate) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioUpdate) {
+            res.status(200).send({
+                Usuario: UsuarioUpdate
+            });
+        }
+        else {
+            return res.status(404).send({ message: 'No se pudo actualizar' });
+        }
+    });
+
+}
+
+function deleteUsuario(req, res) {
+    var idUsuario = req.params.id;
+    var update;
+
+    usuario.findById({_id: idUsuario, visible: True}, (err, UsuarioGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioGet) {
+            update = UsuarioGet;
+        }
+    });
+
+    update.visible = False;
+
+    usuario.findByIdAndUpdate(idUsuario, update, { new: true }, (err, UsuarioUpdate) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(UsuarioUpdate) {
+            res.status(200).send({
+                Usuario: UsuarioUpdate
+            });
+        }
+        else {
+            return res.status(404).send({ message: 'No se pudo actualizar' });
+        }
+    }); 
+}
 
 module.exports = {
     addUsuario,
     loginUsuario,
-    getUsuario
+    getUsuario,
+    getUsuario2,
+    getUsuarios,
+    updateUsuario,
+    deleteUsuario
 }
+
