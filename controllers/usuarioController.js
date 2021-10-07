@@ -8,15 +8,13 @@ function addUsuario(req, res){
     console.log(req.body);
     var params = req.body;
     var usuarioNew = new usuario();
-    
-    if(params){
+    if(params.nombre, params.password, params.contacto, params.username){
         usuarioNew.nombre = params.nombre;
         usuarioNew.fecha_nacimiento = params.fecha_nacimiento;
         usuarioNew.contacto = params.contacto;
         usuarioNew.username = params.username;
         usuarioNew.password = params.password;
         usuarioNew.visible = true;
-        
         usuarioNew.save((err, usuarioGet) =>{
             if(err) return res.status(500).send({message:'Error al guardar los datos!'});
             if(usuarioGet){
@@ -42,7 +40,6 @@ function addUsuario(req, res){
 // LOGIN
 function loginUsuario(req, res){
     var params = req.body;
-
     usuario.findOne({nombre: params.nombre, visible: True}, (err, usuarioCheck)=>{
             if(err) return res.status(500).send({message:'Error en la peticion'});
             if(usuarioCheck){
@@ -159,3 +156,4 @@ module.exports = {
     updateUsuario,
     deleteUsuario
 }
+
