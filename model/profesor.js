@@ -9,4 +9,5 @@ var ProfesorSchema = Schema({
         id_usuario : {type : Schema.ObjectId, ref : 'Usuario'}
 });
 
-module.exports = mongoose.model('Profesor', ProfesorSchema);
+module.exports = mongoose.model('profesors', ProfesorSchema);
+
