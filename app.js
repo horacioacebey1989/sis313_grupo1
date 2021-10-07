@@ -1,22 +1,21 @@
 'use strict'
-
 var express = require('express');
 var bodyParser = require ('body-parser');
-
 var app = express();
-
 
 //CARGAR RUTAS
 var usuario_route = require('./routes/usuario');
+
 var estudiante_route = require('./routes/estudiante');
+
+var profesor_route = require('./routes/profesor');
+
 
 // MIDDLEWARES
  app.use(bodyParser.urlencoded({extended:true}));
  app.use(bodyParser.json());
 
-
 // RUTAS 
-
 app.post('/prueba', (req, res) =>{
     console.log(req.body);
     res.status(200).send({
@@ -31,7 +30,11 @@ app.get('/', (req, res) =>{
 });
 
 app.use('/api', usuario_route);
+
 app.use('/api', estudiante_route);
+
+app.use('/api', profesor_route);
+
 
 
 // EXPORTACION

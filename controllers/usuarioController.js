@@ -9,14 +9,16 @@ function addUsuario(req, res){
     var params = req.body;
     var usuarioNew = new usuario();
     
-    if(params){
+
+
+    if(params.nombre, params.password, params.contacto, params.username){
         usuarioNew.nombre = params.nombre;
         usuarioNew.fecha_nacimiento = params.fecha_nacimiento;
         usuarioNew.contacto = params.contacto;
         usuarioNew.username = params.username;
         usuarioNew.password = params.password;
         usuarioNew.visible = true;
-        
+      
         usuarioNew.save((err, usuarioGet) =>{
             if(err) return res.status(500).send({message:'Error al guardar los datos!'});
             if(usuarioGet){
@@ -44,7 +46,7 @@ function addUsuario(req, res){
 function loginUsuario(req, res){
     var params = req.body;
     
-    usuario.findOne({nombre: params.nombre}, (err, usuarioCheck)=>{
+    usuario.findOne({usuario: params.nombre}, (err, usuarioCheck)=>{
             if(err) return res.status(500).send({message:'Error en la peticion'});
             if(usuarioCheck){
                 return res.status(200).send({
@@ -60,9 +62,27 @@ function loginUsuario(req, res){
 }
 
 
+//GET USUARIO
+function getUsuario(req, res){
+    var params = req.body;
+    var verify = params.username;
+    usuario.findOne({username : verify}, (err, usuarioGet) => {
+        if(err) return res.status(500).send({message : 'Error en la peticion'});
+        if(usuarioGet){
+            res.status(200).send({
+                //tipoUsuario : tipoUsuarioGet
+                username : usuarioGet
+            })
+        }else{
+            return res.status(404).send({message : 'No se encontraron coincidencias'})
+        }
+    });
+}
+
 // UPDATE
 
 module.exports = {
     addUsuario,
-    loginUsuario
+    loginUsuario,
+    getUsuario
 }
