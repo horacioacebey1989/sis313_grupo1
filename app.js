@@ -5,7 +5,11 @@ var app = express();
 
 //CARGAR RUTAS
 var usuario_route = require('./routes/usuario');
+
+var estudiante_route = require('./routes/estudiante');
+
 var profesor_route = require('./routes/profesor');
+
 
 // MIDDLEWARES
  app.use(bodyParser.urlencoded({extended:true}));
@@ -26,7 +30,11 @@ app.get('/', (req, res) =>{
 });
 
 app.use('/api', usuario_route);
+
+app.use('/api', estudiante_route);
+
 app.use('/api', profesor_route);
+
 
 
 // EXPORTACION

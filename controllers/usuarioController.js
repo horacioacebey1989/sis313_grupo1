@@ -10,17 +10,15 @@ function addUsuario(req, res){
     var usuarioNew = new usuario();
     
 
+
     if(params.nombre, params.password, params.contacto, params.username){
         usuarioNew.nombre = params.nombre;
         usuarioNew.fecha_nacimiento = params.fecha_nacimiento;
         usuarioNew.contacto = params.contacto;
         usuarioNew.username = params.username;
         usuarioNew.password = params.password;
-
-        usuarioNew.contacto = params.contacto;
-        usuarioNew.username = params.username;
         usuarioNew.visible = true;
-
+      
         usuarioNew.save((err, usuarioGet) =>{
             if(err) return res.status(500).send({message:'Error al guardar los datos!'});
             if(usuarioGet){
