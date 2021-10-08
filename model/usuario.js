@@ -10,7 +10,8 @@ var UsuarioSchema = Schema({
         contacto : String,
         username : String,
         password : String,
-        visible : Boolean
+        visible : Boolean,
+        id_tipo_usuario : {type : Schema.ObjectId, ref : 'Tipo_Usuario'},
 });
 
-module.exports = mongoose.model('Usuarios', UsuarioSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);
