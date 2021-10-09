@@ -8,8 +8,9 @@ var reserva =  require('../model/reserva');
 function addReserva(req, res){
     var params = req.body;
     var reservaNew = new reserva();
-    if(params.tiempo, params.id_usuario, params.id_clase){
+    if(params.tiempo,params.costo_total, params.id_usuario, params.id_clase){
         reservaNew.tiempo = params.tiempo;
+        reservaNew.costo_total = params.costo_total;
         reservaNew.id_usuario = params.id_usuario;
         reservaNew.id_clase = params.id_clase;
         reservaNew.visible = true;

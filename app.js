@@ -6,14 +6,9 @@ var app = express();
 //CARGAR RUTAS
 var usuario_route = require('./routes/usuario');
 
-var estudiante_route = require('./routes/estudiante');
-
-var profesor_route = require('./routes/profesor');
-
 var reserva_route = require('./routes/reserva');
 
-
-
+var tipo_usuario_route = require('./routes/tipo_usuario');
 // MIDDLEWARES
  app.use(bodyParser.urlencoded({extended:true}));
  app.use(bodyParser.json());
@@ -34,14 +29,10 @@ app.get('/', (req, res) =>{
 
 app.use('/api', usuario_route);
 
-app.use('/api', estudiante_route);
-
-app.use('/api', profesor_route);
-
 app.use('/api', reserva_route);
 
+app.use('/api', tipo_usuario_route);
 
 
 // EXPORTACION
-
 module.exports = app;
