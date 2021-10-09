@@ -10,6 +10,8 @@ api.post('/addProfesor', profesorController.addProfesor);
 
 api.get('/getProfesor', profesorController.getProfesor);
 
+api.get('/getProfesores', profesorController.getProfesores);
+
 api.put('/updateProfesor/:id', profesorController.updateProfesor);
 
 api.put('/deleteProfesor/:id', profesorController.deleteProfesor);

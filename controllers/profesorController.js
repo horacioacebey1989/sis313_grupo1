@@ -18,6 +18,20 @@ function getProfesor(req, res){
 
 }
 
+//GET PROFESORES 
+function getProfesores(req, res) {
+    profesor.find({ visible: true }, (err, profesorGet) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(profesorGet) {
+            res.status(200).send({
+                profesor : profesorGet
+            });
+        }
+    });
+}
+
 //ADD PROFESOR
 function addProfesor(req, res){
     var params = req.body;
@@ -80,6 +94,7 @@ function deleteProfesor(req, res) {
 
 module.exports = {
     getProfesor,
+    getProfesores,
     addProfesor,
     updateProfesor,
     deleteProfesor

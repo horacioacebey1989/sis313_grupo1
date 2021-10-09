@@ -13,4 +13,4 @@ var UsuarioSchema = Schema({
         visible : Boolean
 });
 
-module.exports = mongoose.model('Usuarios', UsuarioSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);
