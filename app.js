@@ -6,6 +6,7 @@ var app = express();
 //CARGAR RUTAS
 var usuario_route = require('./routes/usuario');
 var tipo_usuario_route = require('./routes/tipo_usuario');
+var materia_particular_route = require('./routes/materia_particular');
 
 // MIDDLEWARES
  app.use(bodyParser.urlencoded({extended:true}));
@@ -27,6 +28,7 @@ app.get('/', (req, res) =>{
 
 app.use('/api', usuario_route);
 app.use('/api', tipo_usuario_route);
+app.use('/api', materia_particular_route);
 
 // EXPORTACION
 module.exports = app;
