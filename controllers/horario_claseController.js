@@ -1,5 +1,6 @@
 'use strict'
 
+
 var horario_clase = require('../model/horario_clase');
 var clase = require('../model/clase');
 
