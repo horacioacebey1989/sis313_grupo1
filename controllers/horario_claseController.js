@@ -143,14 +143,14 @@ function deleteHorarioClase(req, res) {
     var idHorarioClase = req.params.id;
     var update;
 
-    horario_clase.findById({_id: idHoraioClase, visible: true}, (err, HorarioClaseGet) => {
+    horario_clase.findById({_id: idHorarioClase, visible: true}, (err, HorarioClaseGet) => {
         if(err) {
             return res.status(500).send({ message: 'Error en la peticion' });
         }
         if(HorarioClaseGet) {
             update = HorarioClaseGet;
             update.visible = false;
-            horario_clase.findByIdAndUpdate(idHoraioClase, update, { new: true }, (err, HorarioClaseUpdate) => {
+            horario_clase.findByIdAndUpdate(idHorarioClase, update, { new: true }, (err, HorarioClaseUpdate) => {
                 if(err) {
                     return res.status(500).send({ message: 'Error en la peticion' });
                 }

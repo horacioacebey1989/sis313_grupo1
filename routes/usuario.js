@@ -10,7 +10,7 @@ api.post('/loginUsuario', usuarioController.loginUsuario);
 api.post('/getUsuarioByName', usuarioController.getUsuarioByName);
 api.get('/getUsuario', usuarioController.getUsuario);
 api.get('/getUsuario2/:id', usuarioController.getUsuario2);
-api.get('/getUsuarios', usuarioController.getUsuarios);
+api.get('/getUsuarios/:page?', usuarioController.getUsuarios);
 api.put('/updateUsuario/:id', auth.ensureAuthGeneral, usuarioController.updateUsuario);
 api.delete('/deleteUsuario/:id', auth.ensureAuthAdministrador, usuarioController.deleteUsuario);
 
