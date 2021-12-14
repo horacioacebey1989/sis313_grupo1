@@ -2,7 +2,7 @@
 const { query } = require('express');
 const { Query } = require('mongoose');
 var reserva =  require('../model/reserva');
-
+var clase = require('../model/clase');
 
 //ADD PROFESOR
 function addReserva(req, res){
@@ -58,6 +58,20 @@ function getReservas(req, res) {
     });
 }
 
+function getReservasClasesEstudiante(req, res) {
+    var idEstudiante = req.params.id;
+
+    reserva.find({id_usuario: idEstudiante, visible: true}).populate('id_clase').exec((err,reservasConClases) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(reservasConClases) {
+            res.status(200).send({
+                reservasClases : reservasConClases
+            });
+        }
+    });
+}
 
 //UPDATE RESERVA
 
@@ -100,5 +114,6 @@ module.exports = {
     getReserva,
     getReservas,
     updateReserva,
-    deleteReserva
+    deleteReserva,
+    getReservasClasesEstudiante
 }

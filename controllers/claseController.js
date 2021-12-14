@@ -190,6 +190,45 @@ function getClasesProfesor(req, res) {
     });
 }
 
+function getClasesProfesor2(req, res) {
+
+    var idProfesor = req.params.id;
+    var idMateriaParticular = req.params.ID;
+
+    clase.find({id_usuario: idProfesor, id_materia_particular: idMateriaParticular, visible: true}, (err, clasesProfesor) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(clasesProfesor) {
+            res.status(200).send({
+                clasesProfesor : clasesProfesor
+            });
+        }
+        else {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+    });
+}
+
+function getClasesEstudiante(req, res) {
+
+    var idEstudiante = req.params.id;
+
+    clase.find({id_usuario: idEstudiante, visible: true}, (err, getClasesEstudiante) => {
+        if(err) {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+        if(getClasesEstudiante) {
+            res.status(200).send({
+                clasesEstudiante : getClasesEstudiante
+            });
+        }
+        else {
+            return res.status(500).send({ message: 'Error en la peticion' });
+        }
+    });
+}
+
 function updateClase(req, res) {
     var idClase = req.params.id;
     var update = req.body;
@@ -211,36 +250,52 @@ function updateClase(req, res) {
     });
 }
 
-function deleteClase(req, res) {
+function deleteClase(req, res){
     var idClase = req.params.id;
-    var update;
 
-    clase.findById({_id: idClase, visible: true}, (err, ClaseGet) => {
-        if(err) {
-            return res.status(500).send({ message: 'Error en la peticion' });
-        }
-        if(ClaseGet) {
-            update = ClaseGet;
-            update.visible = false;
-            clase.findByIdAndUpdate(idClase, update, { new: true }, (err, ClaseUpdate) => {
-                if(err) {
-                    return res.status(500).send({ message: 'Error en la peticion' });
-                }
-                if(ClaseUpdate) {
-                    res.status(200).send({
-                        Clase: ClaseUpdate
-                    });
-                }
-                else {
-                    return res.status(404).send({ message: 'No se pudo actualizar' });
-                }
-            });
-        }
-        else {
-            return res.status(404).send({ message: 'Error en la peticion' });
+    clase.findByIdAndUpdate(idClase, {"visible": false}, {new:true}, (err, claseUpdate) => { 
+
+        if(err) return res.status(500).send({message:'Error en la peticion'});
+
+        if(claseUpdate) return res.status(200).send({
+            clase : claseUpdate
+        })
+        else{
+            return res.status(404).send({message : 'NO se pudo eliminar'})
         }
     });
 }
+
+// function deleteClase(req, res) {
+//     var idClase = req.params.id;
+//     var update;
+
+//     clase.findById({_id: idClase, visible: true}, (err, ClaseGet) => {
+//         if(err) {
+//             return res.status(500).send({ message: 'Error en la peticion' });
+//         }
+//         if(ClaseGet) {
+//             update = ClaseGet;
+//             update.visible = false;
+//             clase.findByIdAndUpdate(idClase, update, { new: true }, (err, ClaseUpdate) => {
+//                 if(err) {
+//                     return res.status(500).send({ message: 'Error en la peticion' });
+//                 }
+//                 if(ClaseUpdate) {
+//                     res.status(200).send({
+//                         Clase: ClaseUpdate
+//                     });
+//                 }
+//                 else {
+//                     return res.status(404).send({ message: 'No se pudo actualizar' });
+//                 }
+//             });
+//         }
+//         else {
+//             return res.status(404).send({ message: 'Error en la peticion' });
+//         }
+//     });
+// }
 
 module.exports = {
     addClase,
@@ -249,6 +304,8 @@ module.exports = {
     updateClase,
     deleteClase,
     getClasesMateriasNombre,
-    getClasesProfesor
+    getClasesProfesor,
+    getClasesProfesor2,
+    getClasesEstudiante
 }
 

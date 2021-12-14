@@ -16,4 +16,6 @@ api.put('/updateReserva/:id', reservaController.updateReserva);
 
 api.put('/deleteReserva/:id', reservaController.deleteReserva);
 
+api.get('/getReservasClasesEstudiante/:id', reservaController.getReservasClasesEstudiante)
+
 module.exports = api;
