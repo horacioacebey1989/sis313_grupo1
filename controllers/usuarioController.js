@@ -66,6 +66,45 @@ function addUsuario(req, res){
 }
 
 // LOGIN
+// function loginUsuario(req, res){
+//     var params = req.body;
+
+//     usuario.findOne({username: params.username, visible: true}, (err, usuarioCheck)=>{
+//         if(err) return res.status(500).send({message:'Error en la peticion'});
+//         if(usuarioCheck){
+
+//             bcrypt.compare(params.password,usuarioCheck.password,(err,result)=>{
+//                 if(err) {
+//                     return res.status(500).send({ message: 'Error en la peticion' });
+//                 }
+//                 if(!result){
+//                     return res.status(500).send({ message: 'Invalid password' });
+//                 }
+//                 else{
+//                     tipo_usuario.findById({_id: usuarioCheck.id_tipo_usuario, visible: true}, (err, tipo_usuarioGet) => {
+//                         if(err) {
+//                             return res.status(500).send({ message: 'Error en la peticion' });
+//                         }
+//                         if(tipo_usuarioGet) {
+//                             usuarioCheck.tipo_usuario = tipo_usuarioGet;
+//                             return res.status(200).send({
+//                                 usuario : usuarioCheck,
+//                                 token : jwt.createToken(usuarioCheck)
+//                             })
+//                         }
+//                         else {
+//                             return res.status(500).send({ message: 'Error en la peticion' });
+//                         }
+//                     });
+//                 }
+//             });
+//         }
+//         else{
+//             return res.status(404).send({message: 'No ha encontrado el usuario!'})
+//         }
+//     });
+// }
+
 function loginUsuario(req, res){
     var params = req.body;
 
@@ -86,10 +125,17 @@ function loginUsuario(req, res){
                             return res.status(500).send({ message: 'Error en la peticion' });
                         }
                         if(tipo_usuarioGet) {
-                            usuarioCheck.tipo_usuario = tipo_usuarioGet;
+                            var usuarioToShow = {
+                                _id: usuarioCheck._id,
+                                nombre: usuarioCheck.nombre,
+                                fecha_nacimiento: usuarioCheck.fecha_nacimiento,
+                                contacto: usuarioCheck.contacto,
+                                username: usuarioCheck.username,
+                                password: usuarioCheck.password,
+                                tipo: tipo_usuarioGet.nombre
+                            };
                             return res.status(200).send({
-                                usuario : usuarioCheck,
-                                token : jwt.createToken(usuarioCheck)
+                                token : jwt.createToken(usuarioToShow)
                             })
                         }
                         else {
@@ -209,7 +255,7 @@ function getUsuarios(req, res) {
                 }
                 if(UsuariosGet) {
                     UsuariosGet.forEach(usuario => {
-                        if(usuario.id_tipo_usuario.localeCompare(adminGet._id) != 0){
+                        if(usuario.id_tipo_usuario.toString().localeCompare(adminGet._id) != 0){
                             usuarios.push(usuario);
                         }
                     });

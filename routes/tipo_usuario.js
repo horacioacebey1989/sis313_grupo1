@@ -5,7 +5,7 @@ var tipo_usuarioController = require('../controllers/tipo_usuarioController');
 var auth = require('../middlewares/authenticated');
 var api = express.Router();
 
-api.post('/addTipoUsuario', auth.ensureAuthAdministrador, tipo_usuarioController.addTipoUsuario);
+api.post('/addTipoUsuario', tipo_usuarioController.addTipoUsuario);
 api.get('/getTipoUsuario', tipo_usuarioController.getTipoUsuario);
 api.get('/getTipoUsuario2/:id', tipo_usuarioController.getTipoUsuario2);
 api.get('/getTiposUsuario', tipo_usuarioController.getTiposUsuario);

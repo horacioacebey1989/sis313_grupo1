@@ -12,5 +12,6 @@ api.get('/getMateriaParticularbyID', materia_particularController.getMateriaPart
 api.get('/getMateriaParticularbyID/:id', materia_particularController.getMateriaParticular2);
 api.put('/updateMateriaParticular/:id', materia_particularController.updateMateriaParticular);
 api.put('/deleteMateriaParticular/:id', materia_particularController.deleteMateriaParticular);
+api.get('/getMateriasProfesor/:id', materia_particularController.getMateriasProfesor);
 
 module.exports = api;

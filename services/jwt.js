@@ -12,8 +12,7 @@ exports.createToken = function(usuario){
         contacto : usuario.contacto,
         username : usuario.username,
         password : usuario.password,
-        visible : usuario.visible,
-        id_tipo_usuario : usuario.id_tipo_usuario,
+        tipo : usuario.tipo,
         exp : moment().add(30, 'days').unix
     };
     return jwt.encode(data, llave_secreta);
